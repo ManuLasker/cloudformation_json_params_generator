@@ -17,12 +17,12 @@ AWS_CLOUDFORMATION_SECTIONS_LIST: List[str] = ["AWSTemplateFormatVersion",
                                                "Transform",
                                                "Resources",
                                                "Outputs"]
-TYPES_MAPPING = {"String": str, "Number": float, "CommaDelimitedList": lambda x: x.split(",")}
+TYPES_MAPPING = {"String": str, "Number": int, "CommaDelimitedList": lambda x: x.split(",")}
 
 class Param(namedtuple("Param", ["name", "param_type", "description"], defaults=[""])):
     @property
     def value(self) -> str:
-        return TYPES_MAPPING[self.param_type](self._value)
+        return str(TYPES_MAPPING[self.param_type](self._value))
     
     @value.setter
     def value(self, value: str) -> None:
